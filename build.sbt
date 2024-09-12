@@ -4,9 +4,19 @@ import scalariform.formatter.preferences._
 
 // Settings for entire build
 
-ThisBuild/version := "2.5.2-SNAPSHOT"
+// ThisBuild/version := "2.5.2-SNAPSHOT"
 
-ThisBuild/organization := "org.bitbucket.inkytonik.kiama"
+ThisBuild / credentials += Credentials(
+  "GitHub Package Registry",
+  "maven.pkg.github.com",
+  "raw-labs",
+  sys.env.getOrElse("GITHUB_TOKEN", "")
+)
+
+ThisBuild/homepage := Some(url("https://github.com/raw-labs/kiama/"))
+ThisBuild/organization := "com.raw-labs"
+ThisBuild/organizationName := "RAW Labs SA"
+ThisBuild/organizationHomepage := Some(url("https://www.raw-labs.com/"))
 
 ThisBuild/scalaVersion := "2.13.7"
 ThisBuild/crossScalaVersions := Seq("3.1.3", "2.13.7", "2.12.18", "2.11.12")
@@ -110,18 +120,12 @@ val commonSettings =
             .setPreference(SpacesAroundMultiImports, false),
 
         // Publishing
-        publishTo := {
-            val nexus = "https://oss.sonatype.org/"
-            if (version.value.trim.endsWith("SNAPSHOT"))
-                Some("snapshots" at nexus + "content/repositories/snapshots")
-            else
-                Some("releases" at nexus + "service/local/staging/deploy/maven2")
-        },
+        publishTo := Some("GitHub raw-labs Apache Maven Packages" at "https://maven.pkg.github.com/raw-labs/kiama"),
         publishMavenStyle := true,
         Test/publishArtifact := true,
         pomIncludeRepository := { _ => false },
         pomExtra := (
-            <url>https://github.com/inkytonik/kiama</url>
+            <url>https://github.com/raw-labs/kiama</url>
             <licenses>
                 <license>
                     <name>Mozilla Public License, v. 2.0</name>
@@ -130,14 +134,19 @@ val commonSettings =
                 </license>
             </licenses>
             <scm>
-                <url>https://github.com/inkytonik/kiama</url>
-                <connection>scm:hg:https://github.com/inkytonik/kiama</connection>
+                <url>https://github.com/raw-labs/kiama</url>
+                <connection>scm:hg:https://github.com/raw-labs/kiama</connection>
             </scm>
             <developers>
                 <developer>
                    <id>inkytonik</id>
                    <name>Tony Sloane</name>
                    <url>https://github.com/inkytonik</url>
+                </developer>
+                <developer>
+                   <id>raw-labs</id>
+                   <name>RAW Labs</name>
+                   <url>https://github.com/raw-labs</url>
                 </developer>
             </developers>
         )
@@ -197,7 +206,7 @@ lazy val core =
         ScalaUnidoc/unidoc/scalacOptions ++=
             Seq(
                 "-doc-source-url",
-                    "https://github.com/inkytonik/kiama/blob/master€{FILE_PATH}.scala"
+                    "https://github.com/raw-labs/kiama/blob/master€{FILE_PATH}.scala"
             ),
         TestScalaUnidoc/unidoc/scalacOptions := (ScalaUnidoc/unidoc/scalacOptions).value,
         ScalaUnidoc/unidoc/unidocProjectFilter := inAnyProject -- inProjects(extrasProject),
@@ -232,7 +241,7 @@ lazy val extras =
         Compile/doc/scalacOptions ++=
             Seq(
                 "-doc-source-url",
-                    "https://github.com/inkytonik/kiama/blob/master€{FILE_PATH}.scala"
+                    "https://github.com/raw-labs/kiama/blob/master€{FILE_PATH}.scala"
             ),
         Test/doc/scalacOptions := (Compile/doc/scalacOptions).value
     ).settings(
