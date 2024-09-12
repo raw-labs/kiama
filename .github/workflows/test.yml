@@ -7,14 +7,12 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  test:
+    runs-on: self-hosted
+    container:
+      image: sbtscala/scala-sbt:eclipse-temurin-jammy-8u402-b06_1.9.9_2.13.13
+      options: --user 1001:1001
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
+      - uses: actions/checkout@v4
       - name: Run tests
-        run: sbt +test
+        run: sbt clean +test
