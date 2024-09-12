@@ -1,0 +1,22 @@
+name: publish
+on:
+  push:
+    tags:
+      - "v*.*.*"
+      - "v*.*.*-*"
+
+env:
+  GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
+
+jobs:
+  publish:
+    runs-on: self-hosted
+    container:
+      image: sbtscala/scala-sbt:eclipse-temurin-jammy-8u402-b06_1.9.9_2.13.13
+      options: --user 1001:1001
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: sbt publish
+      run: sbt clean +publish
