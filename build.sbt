@@ -88,7 +88,7 @@ val commonSettings =
                     sys.error(s"unexpected Scala version $version")
             }
         },
-
+        Compile / packageBin / packageOptions += Package.ManifestAttributes("Automatic-Module-Name" -> name.value.replace('-', '.'))
         libraryDependencies ++= {
             val scalaCheckVersion =
                 thisCrossVersion.value match {
