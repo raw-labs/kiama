@@ -18,8 +18,8 @@ ThisBuild / organization := "com.raw-labs"
 ThisBuild / organizationName := "RAW Labs SA"
 ThisBuild / organizationHomepage := Some(url("https://www.raw-labs.com/"))
 
-ThisBuild / scalaVersion := "2.13.7"
-ThisBuild / crossScalaVersions := Seq("3.1.3", "2.13.7", "2.12.18", "2.11.12")
+ThisBuild / scalaVersion := "2.13.15"
+ThisBuild / crossScalaVersions := Seq("3.1.3", "2.13.15", "2.12.18", "2.11.12")
 
 ThisBuild / versionScheme := Some("semver-spec")
 ThisBuild / scalacOptions := {
